@@ -20,6 +20,10 @@ let contextMenu = Menu.buildFromTemplate([
 let interval = false;
 let nextNotification = getNextNotificationDate();
 
+/* 
+  Default values to set when init app launch
+*/
+
 const DEFAULT_TIME = 1;
 const DEFAULT_BREAK = 5;
 const DEFAULT_TIPS = true;
@@ -36,6 +40,12 @@ app.on("ready", () => {
   }
   startPowerMonitoring();
 });
+
+app.on("window-all-closed", () => {
+  // do nothing, so app wont get closed
+});
+
+// Set to default values
 function defaultSettings() {
   setData("time", DEFAULT_TIME);
   setData("showTips", DEFAULT_TIPS);
@@ -45,8 +55,7 @@ function defaultSettings() {
 /* 
   Monitor if the system is in lock mode
   clear the interval when in lock mode
-  When its resumed restart the timer
-
+  When its resumed restart the timer000
  */
 
 function startPowerMonitoring() {
@@ -65,6 +74,10 @@ function onResumeOrUnlock() {
   nextNotification = getNextNotificationDate();
   startInterval();
 }
+
+/* 
+  Build and Send the notify the user
+*/
 
 function sendNotification() {
   notification = new Notification({
@@ -90,21 +103,29 @@ function sendNotification() {
     snooze();
   });
 
+  /*
+    If the user has selected break session window
+    Else show the notification, is default
+ */
   if (getData("showSession")) {
     openBreakWindow();
   } else {
     notification.show();
   }
 
-  //extend timer
-  //take break for few min and restart again
-  const restartCount = getBreakTime();
+  /*
+    Wait till the break end and start the timer again
+   */
+  const restartCount = +getBreakTime() * 60000;
   setTimeout(() => {
     nextNotification = getNextNotificationDate();
-    console.log("re-starting");
     startInterval();
   }, restartCount);
 }
+
+/*
+  Core timer trigger the notifcation
+ */
 
 function startInterval() {
   clearInterval(interval);
@@ -120,6 +141,10 @@ function startInterval() {
   }, 1000);
 }
 
+/* 
+  Get the random tips for the notification alert
+*/
+
 function getIdea() {
   let microbreakIdeasData;
   if (getData("showTips")) {
@@ -130,6 +155,10 @@ function getIdea() {
     return "Time to get up and Stretch !";
   }
 }
+
+/*
+    Build the menu for notification tray dropdown
+ */
 
 function rebuildMenu() {
   let timelabel = "";
@@ -181,6 +210,10 @@ function rebuildMenu() {
   appIcon.setContextMenu(contextMenu);
 }
 
+/* 
+  Allows the user to snooze for 5 minutes
+ */
+
 function snooze() {
   if (notification) {
     notification.close();
@@ -194,17 +227,24 @@ function snooze() {
   preferencesWin = null;
 }
 
+/* 
+  Get the Actaul Timer and break time
+ */
+
 function getNextNotificationDate() {
   return moment().add(getData("time"), "minutes");
   //return moment().add(0, "minutes");
 }
 
 function getBreakTime() {
-  return moment().add(getData("breakLength"), "minutes");
+  return getData("breakLength");
 }
 
-let preferencesWin = null;
+/* 
+  Windows to open when user click on menu or when break type id full window
+ */
 
+let preferencesWin = null;
 function openPreference() {
   if (preferencesWin) {
     preferencesWin.show();
@@ -257,14 +297,14 @@ function openBreakWindow() {
   });
 }
 
-app.on("window-all-closed", () => {
-  // do nothing, so app wont get closed
-});
+/* 
+  IPC communication from other window
+  Receiver the notification from the preference menu
+ */
 
 ipcMain.on("save-time", (event, arg) => {
   nextNotification = moment().add(arg, "minutes");
   setData("time", +arg);
-  nextNotification = getNextNotificationDate();
   startInterval();
   rebuildMenu();
 });
