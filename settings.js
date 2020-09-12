@@ -3,7 +3,7 @@ const store = new Store();
 
 /* 
   Use json storage which stores in system file
-i  Local storage is not fissible
+  Local storage is not fissible
 */
 
 const setData = (key, data) => {
