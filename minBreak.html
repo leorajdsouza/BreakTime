@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Break Time</title>
+    
+    <style>
+      @font-face {
+        font-family: "Open Sans Light";
+        font-style: normal;
+        font-weight: 300;
+        src: local("Open Sans Light"), local("OpenSans-Light"),
+          url("open-sans-v17-latin_greek_cyrillic-ext_latin-ext_cyrillic_greek-ext_vietnamese-300.woff2")
+            format("woff2"),
+          /* Chrome 26+, Opera 23+, Firefox 39+ */
+            url("open-sans-v17-latin_greek_cyrillic-ext_latin-ext_cyrillic_greek-ext_vietnamese-300.woff")
+            format("woff"); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+      }
+     * {
+  box-sizing: border-box;
+  outline: none;
+  user-select: none;
+}
+
+body {
+  align-items: center;
+  background: radial-gradient(ellipse at center, rgba(255, 179, 206, 0) 0%, rgba(255, 180, 199, 0) 43%, rgba(255, 181, 189, 0.43) 100%);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  display: flex;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00ffb3ce', endColorstr='#6effb5bd', GradientType=1);
+  flex-direction: column;
+  font-family: "Open Sans", sans-serif;
+  height: 100vh;
+  justify-content: center;
+  min-width: 184px;
+  overflow-x: hidden;
+  transition: background-color .2s;
+}
+
+#pomodoro {
+  margin-bottom: 43px;
+  max-width: 512px;
+  width: 100%;
+}
+#pomodoro #clock {
+  background: url(img/bg.png) no-repeat center center;
+  background-size: contain;
+  display: flex;
+  justify-content: center;
+  margin-bottom: -6.25vw;
+  padding: 40vw 0;
+} 
+
+#time{
+  font-family: OpenSans-Light;
+    color: #ff778d;
+    display: flex;
+    font-size: 43px;
+    font-weight: 600;
+    line-height: 43px;
+}
+    </style>
+  </head>
+
+  <body>
+ 
+<div id="pomodoro">
+  <div id="clock">
+     <div id="time"></div>
+  </div> 
+<audio loop autoplay="false" src="audio/ocean.mp3">
+
+  </body>
+  <script src="minBreak.js" >
+  
+  </script>
+</html>

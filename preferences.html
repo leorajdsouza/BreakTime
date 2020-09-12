@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Preference</title>
+    <style>
+      @font-face {
+        font-family: "Open Sans Light";
+        font-style: normal;
+        font-weight: 300;
+        src: local("Open Sans Light"), local("OpenSans-Light"),
+          url("open-sans-v17-latin_greek_cyrillic-ext_latin-ext_cyrillic_greek-ext_vietnamese-300.woff2")
+            format("woff2"),
+          /* Chrome 26+, Opera 23+, Firefox 39+ */
+            url("open-sans-v17-latin_greek_cyrillic-ext_latin-ext_cyrillic_greek-ext_vietnamese-300.woff")
+            format("woff"); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+      }
+
+      body {
+        margin: 20px;
+        font-size: 12px;
+        font-family: Open Sans;
+      }
+      .layout {
+        display: flex;
+        margin-top: 20px;
+      }
+      .pad-l-20 {
+        padding-right: 20px;
+      }
+      .wd {
+        width: 50px;
+      }
+      .label-wd {
+        width: 110px;
+      }
+      .reset-btn {
+        margin-top: 8px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="layout">
+      <div class="pad-l-20 label-wd">Break Time:</div>
+      <div>
+        <select class="wd" id="time">
+          <option>1</option>
+          <option>5</option>
+          <option>15</option>
+          <option>30</option>
+          <option>45</option>
+          <option>60</option>
+        </select>
+      </div>
+    </div>
+    <div class="layout">
+      <div class="pad-l-20 label-wd">Show Tips :</div>
+      <input id="showTips" type="checkbox" />
+    </div>
+    <div class="layout">
+      <div class="pad-l-20 label-wd">Fullscreen Session :</div>
+      <input id="showSession" type="checkbox" />
+    </div>
+
+    <div class="layout">
+      <div class="pad-l-20 label-wd">Break length:</div>
+      <div>
+        <select class="wd" id="breakLength">
+          <option>1</option>
+          <option>5</option>
+          <option>15</option>
+          <option>30</option>
+          <option>45</option>
+          <option>60</option>
+        </select>
+      </div>
+    </div>
+    <br />
+    <button id="reset-btn">Restore Default</button>
+  </body>
+  <script src="preference.js"></script>
+</html>
